@@ -1,8 +1,8 @@
 import sbt._
 import Keys._
 
-object ToyProjectBuild extends Build {
-  lazy val root = Project(id = "ToyProject",
+object ScalaJsonDemoBuild extends Build {
+  lazy val root = Project(id = "ScalaJsonDemo",
     base = file("."),
     settings = Seq(
       libraryDependencies ++= Seq(
