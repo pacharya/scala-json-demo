@@ -1,4 +1,4 @@
-package org.pachuworks.FileReader
+package org.pachuworks.JsonReader
 
 import org.pachuworks.model._
 
@@ -6,11 +6,11 @@ import scala.util.parsing.json._
 
 trait NativeJSONReader extends JSONReader[Programmer] {
 
-  def readJSON(filePath: String) : Option[JSONType] = {
+  def readJSON(filePath: String): Option[JSONType] = {
     read(filePath).flatMap(JSON.parseRaw _)
   }
 
-  def readEntities(filePath: String) : List[Programmer] = {
+  def readEntities(filePath: String): List[Programmer] = {
     readJSON(filePath) match {
       case Some(jArray) if jArray.isInstanceOf[JSONArray] => {
         val arr = jArray.asInstanceOf[JSONArray]
@@ -29,8 +29,8 @@ trait NativeJSONReader extends JSONReader[Programmer] {
     }
   }
 
-  private def createProgrammer(jType: JSONType) : Option[Programmer] = {
-     try {
+  private def createProgrammer(jType: JSONType): Option[Programmer] = {
+    try {
       val jObj = jType.asInstanceOf[JSONObject]
       val innerMap = jObj.obj
       val nameOpt: Option[String] = innerMap.get("name") match {

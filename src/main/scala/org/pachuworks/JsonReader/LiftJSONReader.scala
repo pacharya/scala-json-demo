@@ -1,4 +1,4 @@
-package org.pachuworks.FileReader
+package org.pachuworks.JsonReader
 
 import org.pachuworks.model._
 
@@ -6,7 +6,7 @@ import net.liftweb.json._
 
 trait LiftJSONReader extends JSONReader[Programmer] {
 
-  def readEntities(filePath: String) : List[Programmer] = {
+  def readEntities(filePath: String): List[Programmer] = {
     read(filePath) match {
       case Some(rawJSON) => {
         val json = parse(rawJSON)
