@@ -7,10 +7,10 @@ import net.liftweb.json._
 trait LiftJSONReader extends JSONReader[Programmer] {
 
   def readEntities(filePath: String): List[Programmer] = {
+    implicit val formats = DefaultFormats
     read(filePath) match {
       case Some(rawJSON) => {
         val json = parse(rawJSON)
-        implicit val formats = DefaultFormats
         json.extract[List[Programmer]]
       }
       case None => Nil

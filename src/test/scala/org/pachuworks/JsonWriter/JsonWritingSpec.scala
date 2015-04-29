@@ -8,6 +8,7 @@ import org.pachuworks.model._
 class JsonWritingSpec extends Specification with ThrownExpectations {
 
   val nativeJsonWriter = new NativeJSONWriter()
+  val liftJsonWriter = new LiftJSONWriter()
 
   val testInput: List[Programmer] = List(
     Programmer("Andrew", List("Javascript")),
@@ -19,18 +20,21 @@ class JsonWritingSpec extends Specification with ThrownExpectations {
 
   val regex = "\\s+".r
 
-  def expectedJSON(left: String) : Boolean = {
-    val retValue = (regex.replaceAllIn(left,"") == testOutput)
+  def testJSONWriter(jsonWriter: JSONWriter[Programmer]) : Boolean = {
+    val json = jsonWriter.writeEntities(testInput)
+    val retValue = (regex.replaceAllIn(json,"") == testOutput)
     if (retValue == false) {
-      println("Output JSON: '" + left + "'")
+      println("Output JSON: '" + json + "'")
     }
     retValue
   }
 
   "Writer classes" should {
     "NativeJSONWriter write out JSON" in {
-      val jsonStr = nativeJsonWriter.writeEntities(testInput)
-      expectedJSON(jsonStr) must beTrue
+      testJSONWriter(nativeJsonWriter) must beTrue
+    }
+    "LiftJSONWriter write out JSON" in {
+      testJSONWriter(liftJsonWriter) must beTrue
     }
   }
 
